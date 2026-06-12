@@ -5,7 +5,7 @@ import joblib
 from skimage.feature import graycomatrix, graycoprops, local_binary_pattern
 
 # Page Configuration
-st.set_page_config(page_title="Klasifikasi Kain AI", page_icon="🧶", layout="centered")
+st.set_page_config(page_title="Klasifikasi Kain AI", layout="centered")
 
 # Custom Styles
 st.markdown("""
@@ -16,15 +16,15 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.title("🧶 Klasifikasi Jenis Kain")
+st.title("Klasifikasi Jenis Kain")
 st.caption("Aplikasi berbasis AI dengan Ekstraksi Fitur GLCM + LBP dan Klasifikasi Naive Bayes")
 
-with st.expander("📖 Panduan Penggunaan Aplikasi (Dokumentasi)"):
+with st.expander("Panduan Penggunaan Aplikasi (Dokumentasi)"):
     st.markdown("""
-    1. Siapkan foto sampel kain (**Katun**, **Wol**, atau **Sintetis**).
+    1. Siapkan foto sampel kain (Katun, Wol, atau Sintetis).
     2. Pastikan foto tegak lurus, dekat, dan pencahayaan jelas agar serat tekstur terlihat.
     3. Unggah gambar pada kotak di bawah.
-    4. Klik tombol **🚀 Mulai Analisis Kain** untuk melihat hasil prediksi AI.
+    4. Klik tombol Mulai Analisis Kain untuk melihat hasil prediksi AI.
     """)
 
 st.write("")
@@ -73,18 +73,18 @@ if uploaded_file is not None:
         col1, col2 = st.columns([5, 4], gap="large")
         
         with col1:
-            st.subheader("🖼️ Pratinjau")
+            st.subheader("Pratinjau Gambar")
             file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
             img_bgr = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
             img_gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
             st.image(img_bgr, channels="BGR", use_container_width=True)
             
         with col2:
-            st.subheader("⚡ Analisis AI")
-            st.write("Gambar berhasil dimuat. Siap diekstraksi.")
+            st.subheader("Analisis Sistem")
+            st.write("Gambar berhasil dimuat dan siap diekstraksi.")
             
-            if st.button("🚀 Mulai Analisis Kain", type="primary"):
-                with st.spinner("Mengekstrak tekstur..."):
+            if st.button("Mulai Analisis Kain", type="primary"):
+                with st.spinner("Mengekstrak fitur tekstur..."):
                     img_resized = cv2.resize(img_gray, (128, 128))
                     fitur = ekstract_fitur_kain(img_resized)
                     fitur_scaled = scaler.transform(fitur)
@@ -92,5 +92,5 @@ if uploaded_file is not None:
                     prediksi = model.predict(fitur_pca)[0]
                 
                 st.write("---")
-                st.markdown("### 📊 Hasil Prediksi:")
-                st.info(f"Jenis Kain: **{prediksi.upper()}**")
+                st.markdown("### Hasil Prediksi:")
+                st.info(f"Jenis Kain: {prediksi.upper()}")
