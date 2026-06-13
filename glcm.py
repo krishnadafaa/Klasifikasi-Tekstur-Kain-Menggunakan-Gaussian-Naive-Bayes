@@ -165,7 +165,7 @@ if len(X) > 0:
     
     # Menyimpan model agar bisa dipakai oleh web
     joblib.dump(scaler, 'scaler.pkl')
-    joblib.dump(pca_prep, 'pca_prep.pkl') # Kita simpan pca_prep (yang 95%), bukan yang untuk visualisasi
+    joblib.dump(pca_prep, 'pca_prep.pkl') 
     joblib.dump(model, 'model.pkl')
     print("Model berhasil disimpan untuk Web!")
 
